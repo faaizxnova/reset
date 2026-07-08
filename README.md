@@ -43,13 +43,13 @@ Set-Content -Path $resetFile -Value $sqlContent -Encoding utf8NoBOM
 **Simple tip:** To avoid this problem entirely, use only plain English
 letters, numbers, and basic symbols (like `!@#$%`) in your password.
 
-### 2. The script skips Windows' normal safety check
+### 2. The script bypasses Windows' normal safety check
 
-When the script re-opens itself with admin rights, it tells Windows to
-skip the "is this script allowed to run" check (called execution policy).
-This is why the script can run even on computers that normally block
-scripts. It only skips the check for this one run — it doesn't change
-any settings on your computer permanently.
+When the script re-opens itself with admin rights, it adds `-ExecutionPolicy Bypass`.
+This tells Windows to **bypass** (skip) the usual check that blocks scripts
+from running. That's why the script works even on computers that normally
+stop scripts from running. This bypass only applies to this one run — it
+doesn't change any permanent settings on your computer.
 
 ## Common problems
 
