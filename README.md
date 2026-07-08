@@ -12,15 +12,53 @@ In simple steps, it:
 5. Starts MySQL again.
 6. Logs you in with the new password.
 
-## How to use it
+## How to use it (step by step)
 
-Open PowerShell and run:
+1. **Open PowerShell as Administrator**
+   Right-click PowerShell → "Run as administrator."
 
-```powershell
-.\resetSQL.ps1 -NewRootPassword "YourNewPassword123!"
-```
+2. **Move to the folder where the script is saved**
+   ```powershell
+   cd "C:\path\to\folder"
+   ```
 
-Replace `YourNewPassword123!` with the password you want.
+3. **Fix the encoding** (see below) so special characters in your password
+   aren't lost. Open the script and change:
+   ```powershell
+   Set-Content -Path $resetFile -Value $sqlContent -Encoding ASCII
+   ```
+   to:
+   ```powershell
+   Set-Content -Path $resetFile -Value $sqlContent -Encoding utf8NoBOM
+   ```
+
+4. **Allow the script to run (bypass execution policy)**
+   ```powershell
+   Set-ExecutionPolicy Bypass -Scope Process
+   ```
+   This only allows scripts to run for this one PowerShell window/session —
+   it doesn't change any permanent settings on your computer.
+
+5. **Run the script with your new password**
+   ```powershell
+   .\resetSQL.ps1 "newpassword"
+   ```
+
+6. **Check the password actually changed**
+   - Don't close the terminal yet.
+   - Open a **separate** Command Prompt or PowerShell window and log in with
+     the MySQL command-line client:
+     ```powershell
+     mysql -u root -p
+     ```
+   - Enter your new password when prompted. If it logs in, the change worked.
+
+7. **Close the script's session and restart the MySQL service**
+   - You can now close/end the resetSQL.ps1 session in the first terminal.
+   - Open the **Run** dialog (`Win + R`), type `services.msc`, press Enter.
+   - Find the MySQL service in the list, right-click it, and choose **Restart**
+     (or Stop, then Start) to make sure it's running normally with the new
+     password in place.
 
 ## Things to fix or watch out for
 
