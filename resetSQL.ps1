@@ -163,7 +163,7 @@ FLUSH PRIVILEGES;
 "@
 
 try {
-    Set-Content -Path $resetFile -Value $sqlContent -Encoding ASCII -ErrorAction Stop
+    Set-Content -Path $resetFile -Value $sqlContent -Encoding utf8NoBOM -ErrorAction Stop
 } catch {
     Write-Err "Failed to create reset file: $($_.Exception.Message)"
     Read-Host "Press Enter to exit"
