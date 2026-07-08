@@ -34,6 +34,29 @@ procedure:
 The script requires Administrator rights and will elevate itself automatically
 if needed (a UAC prompt will appear).
 
+### Execution policy bypass
+
+When the script relaunches itself elevated, it does so with:
+
+```powershell
+Start-Process -FilePath "powershell.exe" -ArgumentList @(
+    "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "`"$scriptPath`"", "-NewRootPassword", "`"$NewRootPassword`""
+) -Verb RunAs
+```
+
+The `-ExecutionPolicy Bypass` flag means the elevated (Administrator) instance
+ignores whatever execution policy is configured on the machine (e.g.
+`Restricted` or `AllSigned`) just for this one process — it does not change
+the system-wide policy. This is why you can run the script even if
+`Set-ExecutionPolicy` normally blocks unsigned scripts.
+
+If you'd rather not bypass the policy automatically, you can:
+- Remove `"-ExecutionPolicy", "Bypass",` from the `$argList` and instead
+  unblock/sign the script, or
+- Run the original (non-elevated) call yourself with
+  `powershell -ExecutionPolicy Bypass -File .\resetSQL.ps1 -NewRootPassword "..."`
+  so the relaunch inherits an already-permitted context.
+
 ## ⚠️ Encoding issue to be aware of
 
 The temporary SQL file is written with:
