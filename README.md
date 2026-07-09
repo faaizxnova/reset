@@ -1,8 +1,7 @@
 # resetSQL.exe — Reset Your MySQL Root Password
 
 A standalone Windows tool that resets the `root@localhost` password for a
-local MySQL Server install. No Python, no PowerShell setup, no execution
-policy — just one `.exe` file.
+local MySQL Server install.
 
 ## What it does
 
