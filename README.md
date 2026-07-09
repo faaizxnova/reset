@@ -14,24 +14,13 @@ local MySQL Server install.
 
 ## How to use it
 
-### Option A — Double-click
+### Double-click
 
 1. Double-click `resetSQL.exe`.
 2. Click **Yes** on the UAC (Administrator permission) popup.
 3. When asked, type the new password and press Enter.
 4. Wait for it to finish. Once you see `ready for connections`, press
    `Ctrl+C` to let it continue automatically stopping/restarting MySQL.
-
-### Option B — Command line
-
-Open Command Prompt or PowerShell and run:
-
-```
-resetSQL.exe "YourNewPassword123!"
-```
-
-Replace `YourNewPassword123!` with the password you want. It will still
-show a UAC popup for Administrator permission if needed.
 
 ## Verify it worked
 
